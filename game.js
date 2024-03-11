@@ -44,7 +44,7 @@ function playGame(){
     let playerScore = 0;
     let computerScore = 0;
 
-    for (let round = 1; round <=5; round++){
+   /* for (let round = 1; round <=5; round++){
         const playerSelection = prompt("Round " + round + ": Enter your choice (Rock, Paper or Scissor):");
 
         const computerSelection = getComputerChoice();
@@ -53,10 +53,10 @@ function playGame(){
         console.log("Round " + round + ": " + roundResult);
         if (roundResult.includes("win")) {
             playerScore++;
-        } else if (roundResult.includes("Lose")){
+        } else if (roundResult.includes("lose")){
             computerScore++;
         }
-    }
+    */}
     let winner;
     if (playerScore > computerScore){
         winnner = "You win!";
