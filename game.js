@@ -10,64 +10,74 @@ paper beats rock
 depending on result show
 "you win!" else "you lose!"
 */
+let playerScore = 0;
+let computerScore = 0;
+const buttons = document.querySelectorAll('input');
 
-
+// Get computer's choice
 function getComputerChoice() {
-    const choices = ['Rock', 'Paper', 'Scissors'];
-    const randomIndex = Math.floor(Math.random() * choices.length);
-    return choices[randomIndex];
+    const choices = ['rock', 'paper', 'scissors'];
+    return choices[Math.floor(Math.random() * choices.length)];
 }
 
-// Test the function
-console.log(getComputerChoice());
-
-function playRound(playerSelection, computerSelection){
-    //Convert inoput to all lowercase for insesitve comparison
-    const playerChoice = playerSelection.toLowerCase();
-    const computerChoice = computerSelection.toLowerCase();
-
-
-if (playerChoice === computerChoice) {
-    return "It's a tie!";
-} else if (
-    (playerChoice === 'rock' && computerChoice === 'scissor') ||
-    (playerChoice === 'paper'&& computerChoice === 'rock') ||
-    (playerChoice === 'scissor' && computerChoice === 'paper' )
-) {
-    return `You Win! ${playerSelection} beats ${computerSelection}`;
-} else {
-    return `You Lose! ${computerSelection} beats ${playerSelection}`;
-}
+// Disable buttons after game completion
+function disableButtons() {
+    buttons.forEach(elem => {
+        elem.disabled = true;
+    });
 }
 
-function playGame(){
-    let playerScore = 0;
-    let computerScore = 0;
+// Play a single round of the game
+function playRound(playerSelection) {
+    playerSelection = playerSelection.toLowerCase();
+    let computerSelection = getComputerChoice();
+    let result = "";
 
-   /* for (let round = 1; round <=5; round++){
-        const playerSelection = prompt("Round " + round + ": Enter your choice (Rock, Paper or Scissor):");
+    if ((playerSelection === 'rock' && computerSelection === 'scissors') ||
+        (playerSelection === 'scissors' && computerSelection === 'paper') ||
+        (playerSelection === 'paper' && computerSelection === 'rock')) {
 
-        const computerSelection = getComputerChoice();
-
-        const roundResult = playRound(playerSelection, computerSelection);
-        console.log("Round " + round + ": " + roundResult);
-        if (roundResult.includes("win")) {
-            playerScore++;
-        } else if (roundResult.includes("lose")){
-            computerScore++;
-        }
-    */}
-    let winner;
-    if (playerScore > computerScore){
-        winnner = "You win!";
-    } else if (playerScore < computerScore) {
-        winner = "Your lose!";
+        playerScore++; // Increment player score
+        result = 'You win! ' + playerSelection + ' beats ' + computerSelection;
+    } else if (playerSelection === computerSelection) {
+        result = 'It\'s a tie. You both chose ' + playerSelection;
     } else {
-        winner = "It's a tie!";
+        computerScore++; // Increment computer score
+        result = 'You lose! ' + computerSelection + ' beats ' + playerSelection;
     }
-    console.log("Final Scores:");
-    console.log("Player: " + playerScore);
-    console.log("Computer: " + computerScore);
-    console.log(winner);
+
+    // Update scores
+    result += "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore;
+
+    // Check for game completion
+    if (playerScore === 5 || computerScore === 5) {
+        if (playerScore === 5) {
+            result += '<br><br>You won the game!'; // Player won
+        } else {
+            result += '<br><br>Computer won the game!'; // Computer won
+        }
+        disableButtons(); // Disable buttons
+    }
+
+    // Update result display
+    document.getElementById('result').innerHTML = result;
 }
-playGame();
+
+// Add event listeners to buttons
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        playRound(button.value);
+    });
+});
+
+// Reload button functionality
+document.addEventListener("DOMContentLoaded", function() {
+    // Get the reload button element
+    var reloadButton = document.getElementById("reloadButton");
+
+    // Add click event listener to the reload button
+    reloadButton.addEventListener("click", function() {
+        // Reload the page
+        location.reload();
+    });
+});

@@ -1,0 +1,30 @@
+* {
+    background-color: lightslategray;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.items-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.play-buttons {
+    display: flex;
+    flex:auto;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.button {
+    flex: none;
+    background-color: transparent;
+    border: 2px solid green;
+    color: black;
+    border-radius: 15px;
+    font-weight: bold;
+    padding: 8px 32px;
+    font-size: 18px;
+}
